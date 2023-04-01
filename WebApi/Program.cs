@@ -1,8 +1,18 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using WebApi.Models;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//------\\
+const string CONNETION_NAME = "EquiposDB";
+var connection_string = builder.Configuration.GetConnectionString(CONNETION_NAME);
+
+builder.Services.AddDbContext<EquiposContext>(options => options.UseSqlServer(connection_string));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
